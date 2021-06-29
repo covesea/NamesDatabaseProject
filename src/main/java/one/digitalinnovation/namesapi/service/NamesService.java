@@ -7,6 +7,10 @@ import one.digitalinnovation.namesapi.mapper.NamesMapper;
 import one.digitalinnovation.namesapi.repository.NamesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,5 +33,12 @@ public class NamesService {
                 .builder()
                 .message("Name saved on ID: " + namesSaved.getId())
                 .build();
+    }
+
+    public List<NamesDTO> listAll() {
+        List<Names> allNames = namesRepository.findAll();
+        return allNames.stream()
+                .map(namesMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v0")
@@ -25,6 +26,11 @@ public class NamesController {
     @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO createName(@RequestBody @Valid NamesDTO namesDTO) {
         return namesService.createName(namesDTO);
+    }
+
+    @GetMapping
+    public List<NamesDTO> listAll() {
+        return namesService.listAll();
     }
 
 }
