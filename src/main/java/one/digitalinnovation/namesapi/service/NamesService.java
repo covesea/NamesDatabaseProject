@@ -3,13 +3,15 @@ package one.digitalinnovation.namesapi.service;
 import one.digitalinnovation.namesapi.dto.MessageResponseDTO;
 import one.digitalinnovation.namesapi.dto.request.NamesDTO;
 import one.digitalinnovation.namesapi.entity.Names;
+import one.digitalinnovation.namesapi.exception.NameNotFoundException;
 import one.digitalinnovation.namesapi.mapper.NamesMapper;
 import one.digitalinnovation.namesapi.repository.NamesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -40,5 +42,11 @@ public class NamesService {
         return allNames.stream()
                 .map(namesMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public NamesDTO findById(Long id) throws NameNotFoundException{
+       Names name = namesRepository.findById(id)
+            .orElseThrow(() -> new NameNotFoundException(id));
+       return namesMapper.toDTO(name);
     }
 }

@@ -2,6 +2,7 @@ package one.digitalinnovation.namesapi.controller;
 
 import one.digitalinnovation.namesapi.dto.MessageResponseDTO;
 import one.digitalinnovation.namesapi.dto.request.NamesDTO;
+import one.digitalinnovation.namesapi.exception.NameNotFoundException;
 import one.digitalinnovation.namesapi.service.NamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,4 +34,8 @@ public class NamesController {
         return namesService.listAll();
     }
 
+    @GetMapping("/{id}")
+    public NamesDTO findById(@PathVariable Long id) throws NameNotFoundException {
+        return namesService.findById(id);
+    }
 }
