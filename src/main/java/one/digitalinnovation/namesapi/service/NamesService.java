@@ -6,8 +6,10 @@ import one.digitalinnovation.namesapi.entity.Names;
 import one.digitalinnovation.namesapi.exception.NameNotFoundException;
 import one.digitalinnovation.namesapi.mapper.NamesMapper;
 import one.digitalinnovation.namesapi.repository.NamesRepository;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.List;
@@ -30,10 +32,7 @@ public class NamesService {
         Names namesToSave = namesMapper.toModel(namesDTO);
 
         Names namesSaved = namesRepository.save(namesToSave);
-        return MessageResponseDTO
-                .builder()
-                .message("Name saved on ID: " + namesSaved.getId())
-                .build();
+        return createMessageResponse(namesSaved.getId(), "This ID was just saved ' ' ");
     }
 
     public List<NamesDTO> listAll() {
@@ -54,9 +53,25 @@ public class NamesService {
         namesRepository.deleteById(id);
     }
 
+    public MessageResponseDTO updateName(Long id, NamesDTO namesDTO) throws NameNotFoundException {
+        verifyIfExist(id);
+
+        Names updateNameId = namesMapper.toModel(namesDTO);
+
+        Names namesUpdated = namesRepository.save(updateNameId);
+        return createMessageResponse(namesUpdated.getId(), "Name was just updated with ID ");
+    }
+
     private Names verifyIfExist(Long id) throws NameNotFoundException {
         return namesRepository.findById(id)
                 .orElseThrow(() -> new NameNotFoundException(id));
+    }
+
+    private MessageResponseDTO createMessageResponse(Long id, String s) {
+        return MessageResponseDTO
+                .builder()
+                .message(s + id)
+                .build();
     }
 
 }

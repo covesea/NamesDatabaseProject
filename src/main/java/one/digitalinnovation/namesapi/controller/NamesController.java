@@ -39,6 +39,11 @@ public class NamesController {
         return namesService.findById(id);
     }
 
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateName(@PathVariable Long id, @RequestBody @Valid NamesDTO namesDTO) throws NameNotFoundException {
+        return namesService.updateName(id, namesDTO);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws NameNotFoundException{

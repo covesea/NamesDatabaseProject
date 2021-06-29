@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 public interface NamesMapper {
     NamesMapper INSTANCE = Mappers.getMapper(NamesMapper.class);
 
-    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd.MM.yyyy")
+    @Mapping(target = "birthDate", source = "birthDate", dateFormat = "dd-MM-yyyy")
     Names toModel(NamesDTO namesDTO);
     NamesDTO toDTO(Names names);
 }
