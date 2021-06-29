@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -44,9 +43,20 @@ public class NamesService {
                 .collect(Collectors.toList());
     }
 
-    public NamesDTO findById(Long id) throws NameNotFoundException{
-       Names name = namesRepository.findById(id)
-            .orElseThrow(() -> new NameNotFoundException(id));
+    public NamesDTO findById(Long id) throws NameNotFoundException {
+       Names name = verifyIfExist(id);
        return namesMapper.toDTO(name);
     }
+
+    public void delete(Long id) throws NameNotFoundException {
+       verifyIfExist(id);
+
+        namesRepository.deleteById(id);
+    }
+
+    private Names verifyIfExist(Long id) throws NameNotFoundException {
+        return namesRepository.findById(id)
+                .orElseThrow(() -> new NameNotFoundException(id));
+    }
+
 }

@@ -38,4 +38,10 @@ public class NamesController {
     public NamesDTO findById(@PathVariable Long id) throws NameNotFoundException {
         return namesService.findById(id);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws NameNotFoundException{
+        namesService.delete(id);
+    }
 }
