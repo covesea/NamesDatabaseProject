@@ -4,11 +4,6 @@
 
 Class Address foi adicionada para a criacao da database que esta ligada ao nome adicionados.
 
-##### O projeto esta live no Heroku, o link esta abaixo:
-
-https://namesapi-live.herokuapp.com/api/v0
-
-
 
 
 
